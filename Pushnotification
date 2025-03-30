@@ -1,0 +1,23 @@
+struct PushNotification: Notificavel {
+     var mensagem: String
+     var tokenDispositivo: String
+     var prioridade: Prioridade
+
+     func enviarNotificacao() {
+         print("Enviando Push Notification para \(tokenDispositivo) [\(prioridade.rawValue)]: \(mensagem)")
+     }
+ }
+
+ func obterEntradaValida<T: RawRepresentable>(_ mensagem: String, opcoesValidas: [T]) -> T where T.RawValue == String {
+     while true {
+         print(mensagem)
+         if let entrada = readLine(), let valor = T(rawValue: entrada.lowercased()) {
+             return valor
+         }
+         print("Opção inválida! Tente novamente.")
+     }
+ }
+
+ func filtrarCanaisPorTipo<T: Notificavel>(_ canais: [Notificavel], tipo: T.Type) -> [T] {
+     return canais.compactMap { $0 as? T }
+ }
