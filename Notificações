@@ -1,0 +1,47 @@
+import Foundation
+
+
+ protocol Notificavel {
+     var mensagem: String { get }
+     var prioridade: Prioridade { get }
+     func enviarNotificacao()
+ }
+
+ extension Notificavel {
+     func enviarNotificacao() {
+         print("Enviando notificação: [\(prioridade.rawValue)] \(mensagem)")
+     }
+ }
+
+ enum Prioridade: String {
+     case baixa, media, alta
+ }
+
+ enum TipoMensagem: String {
+     case promocao, lembrete, alerta
+ }
+
+ struct Mensagem {
+     var tipo: TipoMensagem
+     var conteudo: String
+ }
+
+ struct Email: Notificavel {
+     var mensagem: String
+     var enderecoEmail: String
+     var prioridade: Prioridade
+
+     func enviarNotificacao() {
+         print("Enviando email para \(enderecoEmail) [\(prioridade.rawValue)]: \(mensagem)")
+     }
+ }
+
+ struct SMS: Notificavel {
+     var mensagem: String
+     var numeroTelefone: String
+     var prioridade: Prioridade
+
+     func enviarNotificacao() {
+         print("Enviando SMS para \(numeroTelefone) [\(prioridade.rawValue)]: \(mensagem)")
+     }
+ }
